@@ -13,7 +13,7 @@ $ wget https://github.com/inokappa/packer-post-processor-aws-update-launchtempla
 
 ## Usage
 
-The following example is a template to create New Launch template version.(Source template: `latest`)
+The following example is a template to create New Launch template version.
 
 ```json
 {
