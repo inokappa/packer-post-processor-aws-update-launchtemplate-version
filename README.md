@@ -42,8 +42,18 @@ The following example is a template to create New Launch template version.(Sourc
     [
       {
         "type": "aws-update-launchtemplate-version",
-        "template_id": "lt-xxxxxxxxxxxxxxxxxxxxx",
-        "source_template_version": "latest"
+        "templates": [
+          {
+            "id": "lt-xxxxxxxxxxxxxxxxxxxx1",
+            "source_version": "latest",
+            "version_descripiton": "foo"
+          },
+          {
+            "id": "lt-xxxxxxxxxxxxxxxxxxxx2",
+            "source_version": "default",
+            "version_descripiton": "bar"
+          }
+        ]
       }
     ]
   ]

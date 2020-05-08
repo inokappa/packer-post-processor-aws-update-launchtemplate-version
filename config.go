@@ -11,9 +11,11 @@ type Config struct {
 	common.PackerConfig    `mapstructure:",squash"`
 	awscommon.AccessConfig `mapstructure:",squash"`
 
-	TemplateId            string `mapstructure:"template_id"`
-	SourceTemplateVersion string `mapstructure:"source_template_version"`
-	VersionDescription    string `mapstructure:"version_description"`
+	Templates []struct {
+		Id                 string `mapstructure:"id"`
+		SourceVersion      string `mapstructure:"source_version"`
+		VersionDescription string `mapstructure:"version_description"`
+	} `mapstructure:"templates"`
 
 	ctx interpolate.Context
 }

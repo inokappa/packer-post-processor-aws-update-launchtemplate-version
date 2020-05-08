@@ -30,9 +30,11 @@ type FlatConfig struct {
 	SkipMetadataApiCheck  *bool                             `mapstructure:"skip_metadata_api_check" cty:"skip_metadata_api_check"`
 	Token                 *string                           `mapstructure:"token" required:"false" cty:"token"`
 	VaultAWSEngine        *common.FlatVaultAWSEngineOptions `mapstructure:"vault_aws_engine" required:"false" cty:"vault_aws_engine"`
-	TemplateId            *string                           `mapstructure:"template_id" cty:"template_id"`
-	SourceTemplateVersion *string                           `mapstructure:"source_template_version" cty:"source_template_version"`
-	VersionDescription    *string                           `mapstructure:"version_description" cty:"version_description"`
+	Templates             []struct {
+		Id                 string "mapstructure:\"id\""
+		SourceVersion      string "mapstructure:\"source_version\""
+		VersionDescription string "mapstructure:\"version_description\""
+	} `mapstructure:"templates" cty:"templates"`
 }
 
 // FlatMapstructure returns a new FlatConfig.
@@ -67,9 +69,7 @@ func (*FlatConfig) HCL2Spec() map[string]hcldec.Spec {
 		"skip_metadata_api_check":       &hcldec.AttrSpec{Name: "skip_metadata_api_check", Type: cty.Bool, Required: false},
 		"token":                         &hcldec.AttrSpec{Name: "token", Type: cty.String, Required: false},
 		"vault_aws_engine":              &hcldec.BlockSpec{TypeName: "vault_aws_engine", Nested: hcldec.ObjectSpec((*common.FlatVaultAWSEngineOptions)(nil).HCL2Spec())},
-		"template_id":                   &hcldec.AttrSpec{Name: "template_id", Type: cty.String, Required: false},
-		"source_template_version":       &hcldec.AttrSpec{Name: "source_template_version", Type: cty.String, Required: false},
-		"version_description":           &hcldec.AttrSpec{Name: "version_description", Type: cty.String, Required: false},
+		"templates":                     &hcldec.AttrSpec{Name: "templates", Type: cty.Bool, Required: false}, /* TODO(azr): could not find type */
 	}
 	return s
 }

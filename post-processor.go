@@ -34,12 +34,14 @@ func (p *PostProcessor) Configure(raws ...interface{}) error {
 		return err
 	}
 
-	if p.config.TemplateId == "" {
-		return errors.New("empty `template_id` is not allowed. Please make sure that it is set correctly")
-	}
+	for _, tpl := range p.config.Templates {
+		if tpl.Id == "" {
+			return errors.New("empty `template_id` is not allowed. Please make sure that it is set correctly")
+		}
 
-	if p.config.SourceTemplateVersion == "" {
-		return errors.New("empty `source_template_version` is not allowed. Please make sure that it is set correctly")
+		if tpl.SourceVersion == "" {
+			return errors.New("empty `source_template_version` is not allowed. Please make sure that it is set correctly")
+		}
 	}
 
 	return nil
@@ -53,16 +55,18 @@ func (p *PostProcessor) PostProcess(ctx context.Context, ui packer.Ui, artifact 
 	config := session.Config
 
 	amiId := p.GetImageId(artifact)
-	srcVer := GetLatestLaunchTemplateVersion(p.config.TemplateId, p.config.SourceTemplateVersion)
-	if p.config.VersionDescription == "" {
-		p.config.VersionDescription = fmt.Sprintf("This launchtemplate uses source version %s.", srcVer)
-	}
+	for _, tpl := range p.config.Templates {
+		srcVer := GetLatestLaunchTemplateVersion(tpl.Id, tpl.SourceVersion)
+		if tpl.VersionDescription == "" {
+			tpl.VersionDescription = fmt.Sprintf("This launchtemplate uses source version %s.", srcVer)
+		}
 
-	message := fmt.Sprintf("Creating New Launch Template Version (Template ID: %s Source Version: %s, AMI ID: %s)", p.config.TemplateId, srcVer, amiId)
-	ui.Say(message)
-	_, err = CreateLaunchTemplateVersion(amiId, p.config.TemplateId, srcVer, p.config.VersionDescription)
-	if err != nil {
-		return nil, true, false, err
+		message := fmt.Sprintf("Creating New Launch Template Version (Template ID: %s Source Version: %s, AMI ID: %s)", tpl.Id, srcVer, amiId)
+		ui.Say(message)
+		_, err = CreateLaunchTemplateVersion(amiId, tpl.Id, srcVer, tpl.VersionDescription)
+		if err != nil {
+			return nil, true, false, err
+		}
 	}
 
 	artifact = &awscommon.Artifact{
