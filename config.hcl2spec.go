@@ -31,9 +31,9 @@ type FlatConfig struct {
 	Token                 *string                           `mapstructure:"token" required:"false" cty:"token"`
 	VaultAWSEngine        *common.FlatVaultAWSEngineOptions `mapstructure:"vault_aws_engine" required:"false" cty:"vault_aws_engine"`
 	Templates             []struct {
-		ID                 string "mapstructure:\"id\""
+		Id                 string "mapstructure:\"id\""
 		SourceVersion      string "mapstructure:\"source_version\""
-		VersionDescripiton string "mapstructure:\"version_descripiton\""
+		VersionDescription string "mapstructure:\"version_description\""
 	} `mapstructure:"templates" cty:"templates"`
 }
 
