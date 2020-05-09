@@ -62,7 +62,7 @@ func (p *PostProcessor) PostProcess(ctx context.Context, ui packer.Ui, artifact 
 		}
 
 		message := fmt.Sprintf("Creating New Launch Template Version (Template ID: %s Source Version: %s, AMI ID: %s)", tpl.Id, srcVer, amiId)
-		ui.Say(message)
+		ui.Message(message)
 		_, err = CreateLaunchTemplateVersion(amiId, tpl.Id, srcVer, tpl.VersionDescription)
 		if err != nil {
 			return nil, true, false, err

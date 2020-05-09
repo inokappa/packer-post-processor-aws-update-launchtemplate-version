@@ -8,7 +8,7 @@
 
 ```sh
 $ mkdir -p ~/.packer.d/plugins
-$ wget https://github.com/inokappa/packer-post-processor-aws-update-launchtemplate-version/releases/download/v0.0.1/packer-post-processor-aws-update-launchtemplate-version_darwin_amd64 -O ~/.packer.d/plugins/packer-post-processor-aws-update-launchtemplate-version
+$ wget https://github.com/inokappa/packer-post-processor-aws-update-launchtemplate-version/releases/download/v0.0.3/packer-post-processor-aws-update-launchtemplate-version_darwin_amd64 -O ~/.packer.d/plugins/packer-post-processor-aws-update-launchtemplate-version
 ```
 
 ## Usage
